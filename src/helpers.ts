@@ -8,8 +8,13 @@ const generateHex = () => {
     }
     return output
 }
+
+export const createColorObject = () => {
+    return {hexCode: generateHex(), isLocked: false, id: crypto.randomUUID()}
+}
+
 export const generatePalette = () => {
-    return Array.from({length: 5}, generateHex)
+    return Array.from({length: 5}, createColorObject)
 }
 
 /**
