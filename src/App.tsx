@@ -1,8 +1,23 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {generatePalette, getContrastColor} from "./helpers.ts";
 
 export default function App() {
     const [colors, setColors] = useState(generatePalette)
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.code === 'Space') {
+                // Prevent the default spacebar action (like scrolling).
+                event.preventDefault()
+                setColors(generatePalette())
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        // Cleanup function to remove the event listener when the component unmounts.
+        return () => window.removeEventListener('keydown', handleKeyDown)
+    }, []) // The empty dependency array ensures this effect runs only once.
 
     return (
         <div className="app-container">

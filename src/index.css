@@ -16,6 +16,46 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f4f4f8;
+}
+
+.btn-generator {
+    padding: 0.8em 1.8em;
+    border: 2px solid #171717;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    transition: .3s;
+    z-index: 1;
+    font-family: inherit;
+    color: #171717;
+    cursor: pointer;
+}
+
+.btn-generator::before {
+    content: '';
+    width: 0;
+    height: 300%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: #171717;
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+.btn-generator:hover::before {
+    width: 105%;
+}
+
+.btn-generator:hover {
+    color: #ffffff;
 }
 
 .app-container {
@@ -25,13 +65,9 @@ body {
     gap: 20px;
 }
 
-.btn-generator {
-
-}
-
 .app {
-    width: 100rem;
-    height: 50rem;
+    width: 100vw;
+    height: 70vh;
 }
 
 .palette-list {
