@@ -19,7 +19,7 @@ body {
     background-color: #f4f4f8;
 }
 
-.btn-generator {
+.btn-main {
     padding: 0.8em 1.8em;
     border: 2px solid #171717;
     border-radius: 25px;
@@ -36,7 +36,7 @@ body {
     cursor: pointer;
 }
 
-.btn-generator::before {
+.btn-main::before {
     content: '';
     width: 0;
     height: 300%;
@@ -50,11 +50,11 @@ body {
     z-index: -1;
 }
 
-.btn-generator:hover::before {
+.btn-main:hover::before {
     width: 105%;
 }
 
-.btn-generator:hover {
+.btn-main:hover {
     color: #ffffff;
 }
 
@@ -73,7 +73,7 @@ body {
 .palette-list {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .color-block {
@@ -86,8 +86,45 @@ body {
     gap: 2em;
 }
 
-.fa-lock,
-.fa-lock-open {
+:is(.fa-lock, .fa-lock-open, .fa-circle-xmark) {
     font-size: 1.2rem;
     cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+:is(.fa-lock, .fa-lock-open, .fa-circle-xmark):hover {
+    transform: scale(1.2);
+}
+
+.flex-c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (max-width: 800px) {
+    body {
+        /* Align content to the top on mobile to allow scrolling */
+        align-items: flex-start;
+    }
+
+    .app-container {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .app {
+        height: auto;
+    }
+
+    .palette-list {
+        /* Force a single column layout */
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .color-block {
+        height: 200px;
+    }
 }

@@ -13,10 +13,6 @@ export const createColorObject = () => {
     return {hexCode: generateHex(), isLocked: false, id: crypto.randomUUID()}
 }
 
-export const generatePalette = () => {
-    return Array.from({length: 5}, createColorObject)
-}
-
 /**
  * Calculates the contrasting color (black or white) for a given hex color.
  * @param hexColor - The hex color string (e.g., "#RRGGBB").
