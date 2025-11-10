@@ -71,11 +71,14 @@ function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
 
     return (
         <li className="color-block" style={{backgroundColor: hexCode}}>
-            <p style={{color: textColor}}>{hexCode}</p>
-            <i className={`fa-solid ${isLocked ? 'fa-lock' : 'fa-lock-open'}`}
-               onClick={() => toggleLock(id)}
-               style={{color: textColor}}></i>
-            <i className="fa-regular fa-circle-xmark" onClick={() => deleteColor(id)} style={{color: textColor}}></i>
+            <div className="color-block-content">
+                <p style={{color: textColor}}>{hexCode}</p>
+                <i className={`fa-solid ${isLocked ? 'fa-lock' : 'fa-lock-open'}`}
+                   onClick={() => toggleLock(id)}
+                   style={{color: textColor}}></i>
+                <i className="fa-regular fa-circle-xmark" onClick={() => deleteColor(id)}
+                   style={{color: textColor}}></i>
+            </div>
         </li>
     )
 }

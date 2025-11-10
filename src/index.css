@@ -86,6 +86,19 @@ body {
     gap: 2em;
 }
 
+.color-block-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    opacity: 0; /* Hide content by default */
+    transition: opacity 0.25s ease-in-out;
+}
+
+.color-block:hover .color-block-content {
+    opacity: 1; /* Reveal content on hover */
+}
+
 :is(.fa-lock, .fa-lock-open, .fa-circle-xmark) {
     font-size: 1.2rem;
     cursor: pointer;
