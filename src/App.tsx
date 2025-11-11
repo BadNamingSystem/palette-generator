@@ -1,9 +1,44 @@
 import {useEffect, useState} from "react";
-import {createColorObject, getContrastColor} from "./helpers.ts";
-import type {ColorBlockProps, PaletteProps} from "./types.ts";
+import {createColorObject} from "./helpers.ts";
+import {Palette} from "./Components/Palette.tsx";
+import MainButton from "./Components/MainButton.tsx";
+import Bookmarks from "./Components/Bookmarks.tsx";
+import type {ColorObj} from "./types.ts";
+import PaletteModal from "./Components/PaletteModal.tsx";
+
+const STORAGE_KEY = "palettes"
 
 export default function App() {
     const [colors, setColors] = useState(Array.from({length: 5}, createColorObject))
+    const [showBookmarks, setShowBookmarks] = useState(false)
+    const [modalPalette, setModalPalette] = useState<ColorObj[] | null>(null)
+
+    const [savedPalettes, setSavedPalettes] = useState<ColorObj[][]>(() => {
+        const storedPalettes = localStorage.getItem(STORAGE_KEY)
+        if (!storedPalettes) return []
+        try {
+            return JSON.parse(storedPalettes)
+        } catch (e) {
+            console.error(e)
+            return []
+        }
+    })
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedPalettes))
+    }, [savedPalettes])
+
+    function handleShowBookmarks() {
+        setShowBookmarks(show => !show)
+    }
+
+    function handleSavePalette() {
+        setSavedPalettes(prev => [colors, ...prev])
+    }
+
+    function handleDeleteBookmark(indexToDelete: number) {
+        setSavedPalettes(prev => prev.filter((_, index) => index !== indexToDelete))
+    }
 
     function handleGeneratePalette() {
         setColors(prevColors =>
@@ -36,7 +71,6 @@ export default function App() {
                 handleGeneratePalette()
             }
         }
-
         window.addEventListener('keydown', handleKeyDown)
 
         // Cleanup function to remove the event listener when the component unmounts.
@@ -46,39 +80,18 @@ export default function App() {
     return (
         <div className="app-container">
             <div className="actions flex-c">
-                <button onClick={handleGeneratePalette} className="btn-main" type="button">Generate</button>
-                <button onClick={handleAddColor} className="btn-main" type="button">Add</button>
+                <MainButton onClick={handleGeneratePalette}>Generate</MainButton>
+                {colors.length < 10 && <MainButton onClick={handleAddColor}>Add</MainButton>}
+                <MainButton onClick={handleSavePalette}>Save</MainButton>
+                {savedPalettes.length > 0 && <MainButton onClick={handleShowBookmarks}>Bookmarks</MainButton>}
             </div>
             <div className="app">
                 <Palette colors={colors} toggleLock={toggleColorLock} deleteColor={handleDeleteColor}/>
+                <div className={`overlay ${showBookmarks ? 'show' : ''}`} onClick={handleShowBookmarks}></div>
+                <Bookmarks show={showBookmarks} toggle={handleShowBookmarks} savedPalettes={savedPalettes}
+                           onSelect={setModalPalette} onDelete={handleDeleteBookmark}/>
             </div>
+            {modalPalette && <PaletteModal palette={modalPalette} onClose={() => setModalPalette(null)}/>}
         </div>
-    )
-}
-
-function Palette({colors, toggleLock, deleteColor}: PaletteProps) {
-    return (
-        <ul className="palette-list">
-            {colors.map(color =>
-                <ColorBlock color={color} toggleLock={toggleLock} deleteColor={deleteColor} key={color.id}/>)}
-        </ul>
-    )
-}
-
-function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
-    const {hexCode, isLocked, id} = color
-    const textColor = getContrastColor(hexCode)
-
-    return (
-        <li className="color-block" style={{backgroundColor: hexCode}}>
-            <div className="color-block-content">
-                <p style={{color: textColor}}>{hexCode}</p>
-                <i className={`fa-solid ${isLocked ? 'fa-lock' : 'fa-lock-open'}`}
-                   onClick={() => toggleLock(id)}
-                   style={{color: textColor}}></i>
-                <i className="fa-regular fa-circle-xmark" onClick={() => deleteColor(id)}
-                   style={{color: textColor}}></i>
-            </div>
-        </li>
     )
 }

@@ -17,6 +17,9 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #f4f4f8;
+
+    /* Provide a default value for the custom property to satisfy linters */
+    --contrast-color: #171717;
 }
 
 .btn-main {
@@ -39,7 +42,7 @@ body {
 .btn-main::before {
     content: '';
     width: 0;
-    height: 300%;
+    height: 330%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -68,6 +71,8 @@ body {
 .app {
     width: 100vw;
     height: 70vh;
+    position: relative;
+    overflow-x: hidden; /* Hide horizontal overflow for sidebar */
 }
 
 .palette-list {
@@ -100,8 +105,10 @@ body {
 }
 
 :is(.fa-lock, .fa-lock-open, .fa-circle-xmark) {
+    color: var(--contrast-color);
     font-size: 1.2rem;
     cursor: pointer;
+    will-change: transform;
     transition: transform 0.2s ease-in-out;
 }
 
@@ -109,11 +116,177 @@ body {
     transform: scale(1.2);
 }
 
+.hex-code {
+    color: var(--contrast-color);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.25em 0.5em;
+    border-radius: 5px;
+    border: 1px solid transparent; /* Add transparent border to prevent layout shift on hover */
+    will-change: transform;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.hex-code:hover {
+    transform: scale(1.1);
+    border-color: var(--contrast-color);
+}
+
 .flex-c {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+/* BOOKMARKS SIDEBAR/OVERLAY */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 5; /* Below sidebar (10), above palette (0) */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none; /* Not clickable by default */
+}
+
+.overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Hidden */
+.bookmarks-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Visible */
+.bookmarks-sidebar.show {
+    transform: translateX(0);
+}
+
+.bookmarks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.bookmarks-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.bookmarks-empty {
+    margin: auto;
+    color: #888;
+}
+
+.bookmarks-list {
+    overflow-y: auto; /* Add scrollbar if content overflows */
+    flex-grow: 1;     /* Allow the list to fill available space */
+}
+
+/* BOOKMARK ITEM */
+.bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.bookmark-item:hover {
+    background-color: #f9f9f9;
+}
+
+.bookmark-preview {
+    display: flex;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bookmark-preview > div {
+    flex-grow: 1;
+}
+
+/* PALETTE MODAL/OVERLAY */
+.palette-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.palette-modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%;
+    max-width: 1200px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    font-weight: 600;
+}
+
+.modal-palette-view {
+    display: flex;
+    /* This will be ~70% of the main palette's height (70vh) */
+    height: 50vh;
+}
+
+.modal-color-block {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+}
+
+.modal-color-block span {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: 0.25em 0.75em;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 @media (max-width: 800px) {
@@ -131,6 +304,11 @@ body {
         height: auto;
     }
 
+    .btn-main {
+        font-size: 14px;
+        padding: 0.5em 1.2em;
+    }
+
     .palette-list {
         /* Force a single column layout */
         grid-template-columns: 1fr;
@@ -139,5 +317,28 @@ body {
 
     .color-block {
         height: 200px;
+    }
+
+    .bookmarks-sidebar {
+        width: 280px;
+    }
+
+    .palette-modal-content {
+        width: 90%;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-palette-view {
+        flex-direction: column;
+        height: auto;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+
+    .modal-color-block {
+        min-height: 80px;
+        align-items: center;
     }
 }
