@@ -1,5 +1,11 @@
 import type {MainButtonProps} from "../types.ts";
 
-export default function MainButton({children, onClick}: MainButtonProps) {
-    return <button onClick={onClick} className="btn-main" type="button">{children}</button>
+export default function MainButton({children, onClick, className, disabled}: MainButtonProps) {
+    return (
+        <button type="button" disabled={disabled}
+                onClick={onClick}
+                className={`btn-main ${className || ""}`}>
+            {children}
+        </button>
+    )
 }

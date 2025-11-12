@@ -10,9 +10,7 @@ export default function PaletteModal({palette, onClose}: PaletteModalProps) {
                     <i className="fa-regular fa-circle-xmark" onClick={onClose}></i>
                 </div>
                 <div className="modal-palette-view">
-                    {palette.map(color => (
-                        <ModalColorBlock color={color} key={color.id}/>
-                    ))}
+                    {palette.map(color => <ModalColorBlock color={color} key={color.id}/>)}
                 </div>
             </div>
         </div>

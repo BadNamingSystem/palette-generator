@@ -47,7 +47,7 @@ export default function App() {
     }
 
     function handleAddColor() {
-        if (colors.length === 10) return
+        if (colors.length >= 10) return
 
         setColors(colors => [...colors, createColorObject()])
     }
@@ -80,10 +80,12 @@ export default function App() {
     return (
         <div className="app-container">
             <div className="actions flex-c">
-                <MainButton onClick={handleGeneratePalette}>Generate</MainButton>
-                {colors.length < 10 && <MainButton onClick={handleAddColor}>Add</MainButton>}
-                <MainButton onClick={handleSavePalette}>Save</MainButton>
-                {savedPalettes.length > 0 && <MainButton onClick={handleShowBookmarks}>Bookmarks</MainButton>}
+                <MainButton onClick={handleGeneratePalette} className="btn-generate">Generate</MainButton>
+                <div className="sub-actions">
+                    <MainButton onClick={handleAddColor} disabled={colors.length >= 10}>Add</MainButton>
+                    <MainButton onClick={handleSavePalette}>Save</MainButton>
+                    {savedPalettes.length > 0 && <MainButton onClick={handleShowBookmarks}>Bookmarks</MainButton>}
+                </div>
             </div>
             <div className="app">
                 <Palette colors={colors} toggleLock={toggleColorLock} deleteColor={handleDeleteColor}/>

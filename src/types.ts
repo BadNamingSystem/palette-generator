@@ -21,6 +21,8 @@ export type ColorBlockProps = {
 export type MainButtonProps = {
     children: ReactNode
     onClick?: () => void
+    className?: string
+    disabled?: boolean
 }
 
 export type BookmarksProps = {
