@@ -82,8 +82,8 @@ export default function App() {
             <div className="actions flex-c">
                 <MainButton onClick={handleGeneratePalette} className="btn-generate">Generate</MainButton>
                 <div className="sub-actions">
-                    <MainButton onClick={handleAddColor} disabled={colors.length >= 10}>Add</MainButton>
-                    <MainButton onClick={handleSavePalette}>Save</MainButton>
+                    <MainButton onClick={handleAddColor} disabled={colors.length >= 10}>Add Color</MainButton>
+                    <MainButton onClick={handleSavePalette}>Save Palette</MainButton>
                     {savedPalettes.length > 0 && <MainButton onClick={handleShowBookmarks}>Bookmarks</MainButton>}
                 </div>
             </div>

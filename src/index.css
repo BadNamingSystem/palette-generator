@@ -17,7 +17,6 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #f4f4f8;
-
     /* Provide a default value for the custom property to satisfy linters */
     --contrast-color: #171717;
 }
@@ -43,7 +42,7 @@ body {
 .btn-main::before {
     content: '';
     width: 0;
-    height: 500%;
+    height: 550%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -338,25 +337,27 @@ body {
 
     .sub-actions {
         display: flex;
+        gap: 0.5rem;
     }
 
     .btn-generate {
         width: 100%;
         max-width: 200px;
+        margin-top: 16px;
     }
 
     .app-container {
-        padding: 1rem;
         width: 100%;
     }
 
     .app {
+        width: 100%;
         height: auto;
     }
 
     .btn-main {
-        font-size: 14px;
-        padding: 0.5em 1.2em;
+        font-size: 12px;
+        padding: 0.5em 1em;
     }
 
     .palette-list {
