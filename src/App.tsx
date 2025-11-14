@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {createColorObject} from "./helpers.ts";
-import {Palette} from "./Components/Palette.tsx";
+import Palette from "./Components/Palette.tsx";
 import MainButton from "./Components/MainButton.tsx";
 import Bookmarks from "./Components/Bookmarks.tsx";
 import type {ColorObj} from "./types.ts";

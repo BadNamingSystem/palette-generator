@@ -2,7 +2,7 @@ import type {ColorBlockProps} from "../types.ts";
 import {type CSSProperties, useState} from "react";
 import {getContrastColor, handleCopyToClipboard} from "../helpers.ts";
 
-export function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
+export default function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
     const {hexCode, isLocked, id} = color
     const [isCopied, setIsCopied] = useState(false)
 
