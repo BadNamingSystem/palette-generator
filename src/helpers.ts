@@ -1,5 +1,3 @@
-import type {Dispatch, SetStateAction} from "react";
-
 const generateHex = () => {
     const hexString = "0123456789ABCDEF".split("")
     let output = "#"
