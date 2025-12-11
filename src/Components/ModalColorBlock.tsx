@@ -1,13 +1,12 @@
-import {useState} from "react";
-import type {ModalColorBlockProps} from "../types.ts";
-import {handleCopyToClipboard} from "../helpers.ts";
+import type {ModalColorBlockProps} from "../types.ts"
+import {useClipboard} from "../useClipboard.ts"
 
 export default function ModalColorBlock({color}: ModalColorBlockProps) {
-    const [isCopied, setIsCopied] = useState(false)
+    const {isCopied, copy} = useClipboard()
 
     return (
         <div className="modal-color-block" style={{backgroundColor: color.hexCode}}>
-            <span onClick={() => handleCopyToClipboard(setIsCopied, color.hexCode)}>
+            <span onClick={() => copy(color.hexCode)}>
                 {isCopied ? "Copied!" : color.hexCode}
             </span>
         </div>

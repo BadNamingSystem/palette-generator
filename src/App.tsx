@@ -3,17 +3,21 @@ import {createColorObject} from "./helpers.ts";
 import {Palette} from "./Components/Palette.tsx";
 import MainButton from "./Components/MainButton.tsx";
 import Bookmarks from "./Components/Bookmarks.tsx";
-import type {ColorObj} from "./types.ts";
+//import type {ColorObj} from "./types.ts";
 import PaletteModal from "./Components/PaletteModal.tsx";
+import useColorStore from "./useColorStore.ts"
 
-const STORAGE_KEY = "palettes"
+//const STORAGE_KEY = "palettes"
 
 export default function App() {
-    const [colors, setColors] = useState(Array.from({length: 5}, createColorObject))
-    const [showBookmarks, setShowBookmarks] = useState(false)
-    const [modalPalette, setModalPalette] = useState<ColorObj[] | null>(null)
+    const {showBookmarks, colors, modalPalette, savedPalettes} = useColorStore()
+    const {generatePalette, toggleBookmarks} = useColorStore().actions
 
-    const [savedPalettes, setSavedPalettes] = useState<ColorObj[][]>(() => {
+    //const [colors, setColors] = useState(Array.from({length: 5}, createColorObject))
+    //const [showBookmarks, setShowBookmarks] = useState(false)
+    //const [modalPalette, setModalPalette] = useState<ColorObj[] | null>(null)
+
+    /*const [savedPalettes, setSavedPalettes] = useState<ColorObj[][]>(() => {
         const storedPalettes = localStorage.getItem(STORAGE_KEY)
         if (!storedPalettes) return []
         try {
@@ -26,7 +30,7 @@ export default function App() {
 
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(savedPalettes))
-    }, [savedPalettes])
+    }, [savedPalettes])*/
 
     function handleShowBookmarks() {
         setShowBookmarks(show => !show)
@@ -80,7 +84,7 @@ export default function App() {
     return (
         <div className="app-container">
             <div className="actions flex-c">
-                <MainButton onClick={handleGeneratePalette} className="btn-generate">Generate</MainButton>
+                <MainButton onClick={generatePalette} className="btn-generate">Generate</MainButton>
                 <div className="sub-actions">
                     <MainButton onClick={handleAddColor} disabled={colors.length >= 10}>Add Color</MainButton>
                     <MainButton onClick={handleSavePalette}>Save Palette</MainButton>
