@@ -1,4 +1,4 @@
-import type {ReactNode} from "react";
+import type {MouseEventHandler, ReactNode} from "react";
 
 export type ColorObj = {
     hexCode: string
@@ -20,7 +20,7 @@ export type ColorBlockProps = {
 
 export type MainButtonProps = {
     children: ReactNode
-    onClick?: () => void
+    onClick?: MouseEventHandler<HTMLButtonElement>
     className?: string
     disabled?: boolean
 }

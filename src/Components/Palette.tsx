@@ -1,7 +1,7 @@
-import type {PaletteProps} from "../types.ts";
-import ColorBlock from "./ColorBlock.tsx";
+import type {PaletteProps} from "../types.ts"
+import ColorBlock from "./ColorBlock.tsx"
 
-export default function Palette({colors, toggleLock, deleteColor}: PaletteProps) {
+export function Palette({colors, toggleLock, deleteColor}: PaletteProps) {
     return (
         <ul className="palette-list">
             {colors.map(color =>

@@ -1,5 +1,3 @@
-import type {Dispatch, SetStateAction} from "react";
-
 const generateHex = () => {
     const hexString = "0123456789ABCDEF".split("")
     let output = "#"
@@ -14,15 +12,6 @@ const generateHex = () => {
 export const createColorObject = () => {
     return {hexCode: generateHex(), isLocked: false, id: crypto.randomUUID()}
 }
-
-export const handleCopyToClipboard = (setState: Dispatch<SetStateAction<boolean>>, text: string) => {
-        navigator.clipboard.writeText(text).then(() => {
-            setState(true)
-
-            // Reset the "Copied!" message after 1.5 seconds.
-            setTimeout(() => setState(false), 1500)
-        }).catch(error => console.error(`Failed to copy text: ${error}`))
-    }
 
 /**
  * Calculates the contrasting color (black or white) for a given hex color.
