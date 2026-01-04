@@ -1,5 +1,5 @@
-import type {PaletteModalProps} from "../types.ts";
-import ModalColorBlock from "./ModalColorBlock.tsx";
+import type {PaletteModalProps} from "../types.ts"
+import ModalColorBlock from "./ModalColorBlock.tsx"
 
 export default function PaletteModal({palette, onClose}: PaletteModalProps) {
     return (
