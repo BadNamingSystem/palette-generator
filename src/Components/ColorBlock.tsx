@@ -3,7 +3,7 @@ import {type CSSProperties} from "react"
 import {getContrastColor} from "../helpers.ts"
 import {useClipboard} from "../useClipboard.ts"
 
-export function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
+export default function ColorBlock({color, toggleLock, deleteColor}: ColorBlockProps) {
     const {hexCode, isLocked, id} = color
     const {isCopied, copy} = useClipboard()
 
