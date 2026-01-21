@@ -1,4 +1,4 @@
-import type { MainButtonProps } from "../types.ts"
+import type { MainButtonProps } from "../types/types.ts"
 
 export default function MainButton({ children, onClick, className, disabled }: MainButtonProps) {
     return (

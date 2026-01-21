@@ -1,5 +1,5 @@
-import type { ModalColorBlockProps } from "../types.ts"
-import { useClipboard } from "../useClipboard.ts"
+import type { ModalColorBlockProps } from "../types/types.ts"
+import { useClipboard } from "../hooks/useClipboard.ts"
 
 export default function ModalColorBlock({ color }: ModalColorBlockProps) {
     const { isCopied, copy } = useClipboard()

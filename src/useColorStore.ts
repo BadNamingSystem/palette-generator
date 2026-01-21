@@ -1,6 +1,6 @@
 import { create } from "zustand"
-import { createColorObject } from "./helpers.ts"
-import type { ColorObj } from "./types.ts"
+import { createColorObject } from "./utils/helpers.ts"
+import type { ColorObj } from "./types/types.ts"
 import { persist, createJSONStorage } from "zustand/middleware"
 
 type State = {

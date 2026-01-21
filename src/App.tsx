@@ -1,9 +1,9 @@
-import { useEffect } from "react"
 import { Palette } from "./Components/Palette.tsx"
 import MainButton from "./Components/MainButton.tsx"
 import Bookmarks from "./Components/Bookmarks.tsx"
 import PaletteModal from "./Components/PaletteModal.tsx"
 import { useColorActions, useColors, useModalPalette, useSavedPalettes, useShowBookmarks } from "./useColorStore.ts"
+import { useKey } from "./hooks/useKey.ts"
 
 export default function App() {
     const colors = useColors()
@@ -22,17 +22,7 @@ export default function App() {
         deleteBookmark,
     } = useColorActions()
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.code === "Space") {
-                event.preventDefault()
-                generatePalette()
-            }
-        }
-        window.addEventListener("keydown", handleKeyDown)
-
-        return () => window.removeEventListener("keydown", handleKeyDown)
-    }, [generatePalette])
+    useKey("Space", generatePalette)
 
     return (
         <div className="app-container">

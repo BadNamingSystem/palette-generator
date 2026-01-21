@@ -1,4 +1,4 @@
-import type { PaletteProps } from "../types.ts"
+import type { PaletteProps } from "../types/types.ts"
 import ColorBlock from "./ColorBlock.tsx"
 
 export function Palette({ colors, toggleLock, deleteColor }: PaletteProps) {

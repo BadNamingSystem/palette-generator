@@ -1,7 +1,7 @@
-import type { ColorBlockProps } from "../types.ts"
+import type { ColorBlockProps } from "../types/types.ts"
 import { type CSSProperties } from "react"
-import { getContrastColor } from "../helpers.ts"
-import { useClipboard } from "../useClipboard.ts"
+import { getContrastColor } from "../utils/helpers.ts"
+import { useClipboard } from "../hooks/useClipboard.ts"
 
 export default function ColorBlock({ color, toggleLock, deleteColor }: ColorBlockProps) {
     const { hexCode, isLocked, id } = color

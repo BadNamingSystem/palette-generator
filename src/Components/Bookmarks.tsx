@@ -1,4 +1,4 @@
-import type { BookmarksProps } from "../types.ts"
+import type { BookmarksProps } from "../types/types.ts"
 import Bookmark from "./Bookmark.tsx"
 
 export default function Bookmarks({ savedPalettes, show, toggle, onSelect, onDelete }: BookmarksProps) {

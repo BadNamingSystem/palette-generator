@@ -1,4 +1,4 @@
-import type { BookmarkProps } from "../types.ts"
+import type { BookmarkProps } from "../types/types.ts"
 import { type MouseEvent } from "react"
 
 export default function Bookmark({ palette, onSelect, onDelete }: BookmarkProps) {
