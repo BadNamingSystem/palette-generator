@@ -10,7 +10,7 @@ const generateHex = () => {
 }
 
 export const createColorObject = () => {
-    return {hexCode: generateHex(), isLocked: false, id: crypto.randomUUID()}
+    return { hexCode: generateHex(), isLocked: false, id: crypto.randomUUID() }
 }
 
 /**

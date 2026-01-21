@@ -1,7 +1,7 @@
-import {create} from "zustand"
-import {createColorObject} from "./helpers.ts"
-import type {ColorObj} from "./types.ts"
-import {persist, createJSONStorage} from "zustand/middleware"
+import { create } from "zustand"
+import { createColorObject } from "./helpers.ts"
+import type { ColorObj } from "./types.ts"
+import { persist, createJSONStorage } from "zustand/middleware"
 
 type State = {
     colors: ColorObj[]
@@ -23,46 +23,54 @@ type Actions = {
 
 const useColorStore = create<State & { actions: Actions }>()(
     persist(
-        (set) => ({
-            colors: Array.from({length: 5}, createColorObject),
+        set => ({
+            colors: Array.from({ length: 5 }, createColorObject),
             showBookmarks: false,
             modalPalette: null,
             savedPalettes: [],
             actions: {
-                toggleBookmarks: () => set(state => ({showBookmarks: !state.showBookmarks})),
+                toggleBookmarks: () => set(state => ({ showBookmarks: !state.showBookmarks })),
 
-                generatePalette: () => set(state =>
-                    ({colors: state.colors.map(color => color.isLocked ? color : createColorObject())})),
+                generatePalette: () =>
+                    set(state => ({
+                        colors: state.colors.map(color => (color.isLocked ? color : createColorObject())),
+                    })),
 
-                savePalette: () => set(state => ({savedPalettes: [state.colors, ...state.savedPalettes]})),
+                savePalette: () => set(state => ({ savedPalettes: [state.colors, ...state.savedPalettes] })),
 
-                deleteBookmark: (indexToDelete) => set(state => ({
-                    savedPalettes: state.savedPalettes.filter((_, index) => index !== indexToDelete)
-                })),
+                deleteBookmark: indexToDelete =>
+                    set(state => ({
+                        savedPalettes: state.savedPalettes.filter((_, index) => index !== indexToDelete),
+                    })),
 
-                addColor: () => set(state => {
-                    if (state.colors.length >= 10) return {}
-                    return {colors: [...state.colors, createColorObject()]}
-                }),
+                addColor: () =>
+                    set(state => {
+                        if (state.colors.length >= 10) return {}
+                        return { colors: [...state.colors, createColorObject()] }
+                    }),
 
-                toggleColorLock: (id) => set(state => ({
-                    colors: state.colors.map(color => color.id === id ? {...color, isLocked: !color.isLocked} : color)
-                })),
+                toggleColorLock: id =>
+                    set(state => ({
+                        colors: state.colors.map(color =>
+                            color.id === id ? { ...color, isLocked: !color.isLocked } : color,
+                        ),
+                    })),
 
-                deleteColor: (id) => set(state => {
-                    if (state.colors.length <= 3) return {}
-                    return {colors: state.colors.filter(color => color.id !== id || color.isLocked)}
-                }),
+                deleteColor: id =>
+                    set(state => {
+                        if (state.colors.length <= 3) return {}
+                        return { colors: state.colors.filter(color => color.id !== id || color.isLocked) }
+                    }),
 
-                setModalPalette: (palette) => set({modalPalette: palette})
-            }
+                setModalPalette: palette => set({ modalPalette: palette }),
+            },
         }),
         {
             name: "palettes",
             storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({savedPalettes: state.savedPalettes}),
-        }
-    )
+            partialize: state => ({ savedPalettes: state.savedPalettes }),
+        },
+    ),
 )
 
 // State selectors
