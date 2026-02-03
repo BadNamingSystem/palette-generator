@@ -11,7 +11,7 @@ export function useKey(key: string, action: () => void) {
         window.addEventListener("keydown", handleKeyDown)
 
         return () => {
-            document.removeEventListener("keydown", handleKeyDown)
+            window.removeEventListener("keydown", handleKeyDown)
         }
     }, [action])
 }
